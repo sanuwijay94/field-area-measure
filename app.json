@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "field-area-measure",
+    "slug": "field-area-measure",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "field-area-measure"
+}
