@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "406095126310",
+    "project_id": "field-area-measure-380f8",
+    "storage_bucket": "field-area-measure-380f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406095126310:android:3863cfd1ad65398511abe7",
+        "android_client_info": {
+          "package_name": "com.fieldareameasure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406095126310-ugd5sd86gf3k6qpcrjr4t1inuq5ak3fq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCRl0ufiQf1TbtVOy1V-exz92-l0UmXsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406095126310-ugd5sd86gf3k6qpcrjr4t1inuq5ak3fq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
