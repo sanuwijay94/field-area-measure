@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
+import { Image, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View, Button} from 'react-native'
 import styles from './styles';
 import { firebase } from '../../firebase/config'
 import Modal from "react-native-modal";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default function HomeScreen(props, {navigation}) {
 
@@ -14,8 +15,14 @@ export default function HomeScreen(props, {navigation}) {
     const fieldRef = firebase.firestore().collection('fields')
     const userID = props.extraData.id
 
-    const [isModalVisible, setIsModalVisible] = React.useState(false);
-    const handleModal = () => setIsModalVisible(() => !isModalVisible);
+    const [isAddModalVisible, setIsAddModalVisible] = React.useState(false);
+    const handleAddModal = () => setIsAddModalVisible(() => !isAddModalVisible);
+
+    const [isEditModalVisible, setIsEditModalVisible] = React.useState(false);
+    const handleEditModal = () => setIsEditModalVisible(() => !isEditModalVisible);
+
+    const [isConfirmModalVisible, setIsConfirmModalVisible] = React.useState(false);
+    const handleConfirmModal = () => setIsConfirmModalVisible(() => !isConfirmModalVisible);
 
     const onLogoutPress = async() => {
       
@@ -67,7 +74,7 @@ export default function HomeScreen(props, {navigation}) {
                     setCropName('')
                     setArea('')
                     Keyboard.dismiss()
-                    handleModal()
+                    handleAddModal()
                 })
                 .catch((error) => {
                     alert(error)
@@ -75,22 +82,43 @@ export default function HomeScreen(props, {navigation}) {
         }
     }
 
-    const onfieldItemPress = (field) => {}
+    const onEditButtonPress = () => {
+        /* if (cropName && cropName.length > 0) {
+            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+            const data = {
+                crop: field.crop,
+                area: field.area,
+                authorID: userID,
+                createdAt: timestamp,
+            };
+            fieldRef
+                .add(data)
+                .then(_doc => {
+                    setCropName('')
+                    setArea('')
+                    Keyboard.dismiss()
+                    handleAddModal()
+                })
+                .catch((error) => {
+                    alert(error)
+                });
+        } */
+    }
 
     const renderField = ({item}) => {
         return (
             <View style={styles.fieldContainer}>
                 <TouchableOpacity
+                    onPress={() => {handleEditModal}}
                     style={styles.fieldBox}
-                    onPress={() => onfieldItemPress(item)}>
+                    onPress={() => {handleEditModal}}>
                     <Text style={styles.buttonText}>
                         {item.crop}
                     </Text>
                     <Text style={styles.buttonText}>
-                        {item.area}ft
+                        {item.area} m²
                     </Text>
                 </TouchableOpacity>
-                
             </View>
         
         )
@@ -100,27 +128,65 @@ export default function HomeScreen(props, {navigation}) {
         <View style={styles.container}>
             <TouchableOpacity 
                 style={styles.logoutButton}
-                onPress={() => onLogoutPress()}>
-                <Text style={styles.buttonText}>Log out</Text>
-            </TouchableOpacity>
-            {/* <View style={styles.formContainer}> */}
-             {/*    <TextInput
-                    style={styles.input}
-                    placeholder='Add new field'
-                    placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setCropName(text)}
-                    value={cropName}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                /> */}
+                onPress= {handleConfirmModal}>
                 
-            {/* </View> */}
+                <Image
+                    style={styles.logoutLogo}
+                    source={require('../../../assets/logout-icon-png-3.jpg')}
+                />
+            </TouchableOpacity>
+            
+            <Modal style ={styles.modal}transparent = {false} isVisible={isConfirmModalVisible} >
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.buttonText3}>Do you want to logout?</Text>
+                            <View style={styles.formContainer}>
+                                <TouchableOpacity style={styles.savebutton} onPress={() => onLogoutPress()}>
+                                    <Text style={styles.buttonText}>Yes</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.cancelbutton} onPress={handleConfirmModal}>
+                                    <Text style={styles.buttonText}>No</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
             { fields && (
                 <View style={styles.listContainer}>
-                    <TouchableOpacity style={styles.button} onPress={handleModal}>
-                        <Text style={styles.buttonText1}>+</Text>
+                    <TouchableOpacity style={styles.button} onPress={handleAddModal}>
+                        <Text style={styles.buttonText1}>Add New Field</Text>
                     </TouchableOpacity>
-                    <Modal isVisible={isModalVisible}>
+                    <Modal isVisible={isAddModalVisible}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.buttonText2}>Crop</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Add Crop Name'
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(crop) => setCropName(crop)}
+                                value={cropName}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                            <Text style={styles.buttonText2}>Area</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder='Add Area'
+                                placeholderTextColor="#aaaaaa"
+                                onChangeText={(area) => setArea(area)}
+                                value={area}
+                                underlineColorAndroid="white"
+                                autoCapitalize="none"
+                            />
+                            <View style={styles.formContainer}>
+                                <TouchableOpacity style={styles.savebutton} onPress={() => onAddButtonPress()}>
+                                    <Text style={styles.buttonText}>Save</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.cancelbutton} onPress={handleAddModal}>
+                                    <Text style={styles.buttonText}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+                    <Modal isVisible={isEditModalVisible}>
                         <View style={{ flex: 1 }}>
                             <Text style={styles.buttonText2}>Crop Name</Text>
                             <TextInput
@@ -143,15 +209,39 @@ export default function HomeScreen(props, {navigation}) {
                                 autoCapitalize="none"
                             />
                             <View style={styles.formContainer}>
-                                <TouchableOpacity style={styles.savebutton} onPress={() => onAddButtonPress()}>
-                                    <Text style={styles.buttonText}>Save</Text>
+                                <TouchableOpacity style={styles.savebutton} onPress={() => onEditButtonPress()}>
+                                    <Text style={styles.buttonText}>Edit</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.cancelbutton} onPress={handleModal}>
+                                <TouchableOpacity style={styles.cancelbutton} onPress={handleEditModal}>
                                     <Text style={styles.buttonText}>Cancel</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </Modal>
+                    <Modal style ={styles.modal}transparent = {false} isVisible={isConfirmModalVisible} >
+                        <View style={{ flex: 1 }}>
+                        <MapView
+                            style={{ flex: 1 }}
+                            provider={PROVIDER_GOOGLE}
+                            showsUserLocation
+                            initialRegion={{
+                            latitude: 37.78825,
+                            longitude: -122.4324,
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421}}
+                        />
+                        </View>
+                    </Modal>
+                    <MapView
+                        style={{ flex: 1 }}
+                        provider={PROVIDER_GOOGLE}
+                        showsUserLocation
+                        initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421}}
+                    />
                     <FlatList
                         data={fields}
                         renderItem={renderField}
