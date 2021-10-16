@@ -24,6 +24,9 @@ export default function HomeScreen(props, {navigation}) {
     const [isConfirmModalVisible, setIsConfirmModalVisible] = React.useState(false);
     const handleConfirmModal = () => setIsConfirmModalVisible(() => !isConfirmModalVisible);
 
+    const [isMapModalVisible, setIsMapModalVisible] = React.useState(false);
+    const handleMapModal = () => setIsMapModalVisible(() => !isMapModalVisible);
+
     const onLogoutPress = async() => {
       
         try {
@@ -137,18 +140,30 @@ export default function HomeScreen(props, {navigation}) {
             </TouchableOpacity>
             
             <Modal style ={styles.modal}transparent = {false} isVisible={isConfirmModalVisible} >
-                        <View style={{ flex: 1 }}>
-                            <Text style={styles.buttonText3}>Do you want to logout?</Text>
-                            <View style={styles.formContainer}>
-                                <TouchableOpacity style={styles.savebutton} onPress={() => onLogoutPress()}>
-                                    <Text style={styles.buttonText}>Yes</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.cancelbutton} onPress={handleConfirmModal}>
-                                    <Text style={styles.buttonText}>No</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </Modal>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.buttonText3}>Do you want to logout?</Text>
+                    <View style={styles.formContainer}>
+                        <TouchableOpacity style={styles.savebutton} onPress={() => onLogoutPress()}>
+                            <Text style={styles.buttonText}>Yes</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.cancelbutton} onPress={handleConfirmModal}>
+                            <Text style={styles.buttonText}>No</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+            <Modal transparent = {false} isVisible={isMapModalVisible} >
+                <MapView
+                    style={{ flex: 1 }}
+                    provider={PROVIDER_GOOGLE}
+                    showsUserLocation
+                    initialRegion={{
+                    latitude: 6.923099,
+                    longitude: 79.964965,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421}}
+                />
+            </Modal>
             { fields && (
                 <View style={styles.listContainer}>
                     <TouchableOpacity style={styles.button} onPress={handleAddModal}>
@@ -167,15 +182,26 @@ export default function HomeScreen(props, {navigation}) {
                                 autoCapitalize="none"
                             />
                             <Text style={styles.buttonText2}>Area</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder='Add Area'
-                                placeholderTextColor="#aaaaaa"
-                                onChangeText={(area) => setArea(area)}
-                                value={area}
-                                underlineColorAndroid="white"
-                                autoCapitalize="none"
-                            />
+                            <View style={styles.formContainer1}>
+                                <TextInput
+                                    style={styles.input1}
+                                    placeholder='Add Area'
+                                    placeholderTextColor="#aaaaaa"
+                                    onChangeText={(area) => setArea(area)}
+                                    value={area}
+                                    underlineColorAndroid="white"
+                                    autoCapitalize="none"
+                                />
+                                <TouchableOpacity 
+                                    style={styles.logoutButton}
+                                    onPress= {handleMapModal}>
+                                    
+                                    <Image
+                                        style={styles.logoutLogo1}
+                                        source={require('../../../assets/map.png')}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles.formContainer}>
                                 <TouchableOpacity style={styles.savebutton} onPress={() => onAddButtonPress()}>
                                     <Text style={styles.buttonText}>Save</Text>
@@ -218,30 +244,6 @@ export default function HomeScreen(props, {navigation}) {
                             </View>
                         </View>
                     </Modal>
-                    <Modal style ={styles.modal}transparent = {false} isVisible={isConfirmModalVisible} >
-                        <View style={{ flex: 1 }}>
-                        <MapView
-                            style={{ flex: 1 }}
-                            provider={PROVIDER_GOOGLE}
-                            showsUserLocation
-                            initialRegion={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421}}
-                        />
-                        </View>
-                    </Modal>
-                    <MapView
-                        style={{ flex: 1 }}
-                        provider={PROVIDER_GOOGLE}
-                        showsUserLocation
-                        initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421}}
-                    />
                     <FlatList
                         data={fields}
                         renderItem={renderField}

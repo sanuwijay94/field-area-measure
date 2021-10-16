@@ -18,8 +18,21 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    formContainer1: {
+        flexDirection: 'row',
+        width: 600,
+    },
     input: {
         height: 50,
+        borderRadius: 50,
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        paddingLeft: 38,
+        marginTop: 10
+    },
+    input1: {
+        height: 50,
+        width: 330,
         borderRadius: 50,
         overflow: 'hidden',
         backgroundColor: 'white',
@@ -122,6 +135,12 @@ export default StyleSheet.create({
     },
     logoutLogo: {
         height: 25,
+        width: 25,
+        alignSelf: "center",
+        marginBottom: 4,
+    },
+    logoutLogo1: {
+        height: 36,
         width: 25,
         alignSelf: "center",
         marginBottom: 4,
