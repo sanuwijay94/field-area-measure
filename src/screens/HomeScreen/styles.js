@@ -27,10 +27,11 @@ export default StyleSheet.create({
         marginTop: 10
     },
     button: {
-        height: 80,
-        borderRadius: 100,
-        backgroundColor: 'black',
-        width: 120,
+        height: 60,
+        borderRadius: 80,
+        backgroundColor: '#D8A339',
+        width: 250,
+        marginBottom: 30,
         alignItems: "center",
         justifyContent: 'center',
         alignSelf: 'center',
@@ -40,9 +41,10 @@ export default StyleSheet.create({
     savebutton: {
         height: 60,
         borderRadius: 80,
-        backgroundColor: 'black',
+        backgroundColor: '#D8A339',
         width: 120,
         marginRight: 30,
+        marginLeft: 30,
         alignItems: "center",
         justifyContent: 'center',
         alignSelf: 'flex-start',
@@ -52,8 +54,9 @@ export default StyleSheet.create({
     cancelbutton: {
         height: 60,
         borderRadius: 80,
-        backgroundColor: 'black',
+        backgroundColor: '#D8A339',
         width: 120,
+        marginRight: 30,
         marginLeft: 30,
         alignItems: "center",
         justifyContent: 'center',
@@ -62,17 +65,21 @@ export default StyleSheet.create({
         
     },
     logoutButton: {
-        height: 55,
-        borderRadius: 50,
-        backgroundColor: 'black',
-        width: 500,
+        flexDirection: 'row',
+        height: 50,
+        borderRadius: 100,
+        marginTop: 10,
+        marginRight: 10,
+        backgroundColor: '#D8A339',
+        width: 50,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'flex-end'
     },
     fieldBox: {
         height: 150,
         borderRadius: 20,
-        backgroundColor: '#808080',
+        backgroundColor: '#998566',
         width: 250,
         alignItems: "center",
         justifyContent: 'center'
@@ -85,11 +92,18 @@ export default StyleSheet.create({
     },
     buttonText1: {
         color: 'white',
-        fontSize: 34
+        fontSize: 20
     },
     buttonText2: {
         color: 'white',
         fontSize: 28
+    },
+    buttonText3: {
+        color: 'black',
+        marginTop: 150,
+        marginBottom: 50,
+        fontSize: 28,
+        alignSelf: "center",
     },
     listContainer: {
         marginTop: 20,
@@ -105,5 +119,28 @@ export default StyleSheet.create({
     setCropName: {
         fontSize: 20,
         color: '#333333'
-    }
+    },
+    logoutLogo: {
+        height: 25,
+        width: 25,
+        alignSelf: "center",
+        marginBottom: 4,
+    },
+    settingsLogo: {
+        height: 25,
+        width: 25,
+        alignSelf: "center",
+    },
+    modal: {
+        flex: 1,
+        height: 20,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        borderRadius: 20,
+        alignSelf: "center",
+        marginTop: 150,
+        marginBottom: 300,
+     },
+
 })

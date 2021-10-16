@@ -17,7 +17,7 @@ export default StyleSheet.create({
     },
     input: {
         height: 48,
-        borderRadius: 5,
+        borderRadius: 80,
         overflow: 'hidden',
         backgroundColor: 'white',
         marginTop: 10,
@@ -27,12 +27,12 @@ export default StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#D8A339',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
-        height: 48,
-        borderRadius: 5,
+        height: 60,
+        borderRadius: 80,
         alignItems: "center",
         justifyContent: 'center'
     },
@@ -51,7 +51,7 @@ export default StyleSheet.create({
         color: '#2e2e2d'
     },
     footerLink: {
-        color: "#788eec",
+        color: "#D8A339",
         fontWeight: "bold",
         fontSize: 16
     }
